@@ -1,0 +1,98 @@
+<html xmlns:tomboy="http://beatniksoftware.com/tomboy" xmlns:link="http://beatniksoftware.com/tomboy/link" xmlns:size="http://beatniksoftware.com/tomboy/size"><head><META http-equiv="Content-Type" content="text/html; charset=utf-8"><title>RNAi Documentation</title><style type="text/css">
+        
+	body {  }
+	h1 { font-size: xx-large;
+     	     font-weight: bold;
+     	     border-bottom: 1px solid black; }
+	div.note {
+		   position: relative;
+		   display: block;
+		   padding: 5pt;
+		   margin: 5pt; 
+		   white-space: -moz-pre-wrap; /* Mozilla */
+ 	      	   white-space: -pre-wrap;     /* Opera 4 - 6 */
+ 	      	   white-space: -o-pre-wrap;   /* Opera 7 */
+ 	      	   white-space: pre-wrap;      /* CSS3 */
+ 	      	   word-wrap: break-word;      /* IE 5.5+ */ }
+	</style></head><body><div class="note" id="RNAi Documentation"><a name="rnai documentation"></a><h1>RNAi Documentation</h1>
+Author: Temi Varghese
+
+<span style="font-size:xx-large">Installation</span>:
+
+<span style="font-size:large">Software</span> <span style="font-size:large"><a style="color:#204A87" href="#requirements">Requirements</a></span>:
+<ul><li dir="ltr">apache2
+</li><li dir="ltr">php5.3
+</li><li dir="ltr">postgres 9.1
+</li><li dir="ltr">php5-pgsql
+</li><li dir="ltr">bioinformatics software - ubuntu packages bowtie, ncbi-blast+, libjson-perl
+</li><li dir="ltr">transcriptome databases
+</li><li dir="ltr">php5-pgsql, libpg-perl, libapache-dbi-perl</li></ul>
+
+<span style="font-size:large">Installation</span>
+
+After the above softwares/packages are installed, copy the code to the directory <a style="color:#3465A4" href="/var/www/RNAi/">/var/www/RNAi/</a>. 
+
+<span style="font-size:large">Configuation settings</span>
+
+File: <span style="background:yellow">data/config.json</span>
+
+<b>Entering database connections:</b>
+Fill details like host, driver, dbname, port, username, password
+
+<b>Other configs:</b>
+databaseDir - Point to Transcriptome database directory
+tempDir - Directory that will create the temporary files of analysis
+queryFile - a file that will write the query.
+
+
+<span style="font-size:large">Initialization Scripts:</span>
+
+<ul><li dir="ltr">run the database creation <a style="color:#204A87" href="#script">script</a></li></ul>
+
+	<span style="background:yellow"><a style="color:#204A87" href="#psql">psql</a></span><span style="background:yellow"> -p 5435 -h morgan -f data/setup.sql</span>
+
+<ul><li dir="ltr">create taxonomic classification. This will query Atlas of living Australia to get the taxonomy of a transcriptome database. Run this only once.</li></ul>
+
+	<span style="background:yellow">php5 scripts/classifyInsects.php </span>
+
+<span style="font-size:large">Usage Directions:</span>
+
+Visit the website using a browser.
+
+<a style="color:#3465A4" href="http://localhost/RNAi">http://localhost/RNAi</a>
+
+Query Submission:
+Users are required to submit query string and number of mismatches to get the program to work. After they are entered hit the search <a style="color:#204A87" href="#button">button</a>.
+
+Query String: FASTA FORMAT. This is the sequence of letters you like to check against the transcriptiome database.
+
+Mismatches: This the number of mismatches allowed. Values between 0 and 3 are only permitted.
+
+<b>Query Execution:</b>
+All present and past queries are shown on History panel with recently submitted query appearing first. Each query will have one of the following status.
+<ul><li dir="ltr">requesting 
+</li><li dir="ltr">submitted
+</li><li dir="ltr">executing
+</li><li dir="ltr">completed</li></ul>
+
+Check for change in query status by clicking on Reload <a style="color:#204A87" href="#button">button</a> on left. You can view results when query status is completed. Green color indicates query has returned hits and Red no hits found.
+
+Click action <a style="color:#204A87" href="#button">button</a> on Show Result column to view result. And, delete action is also provided in case you would like to remove a query and its result.
+
+<b>Result View</b>:
+This view consist of three parts.
+<ul><li dir="ltr">Classification: Its on the left hand side. It interacts with query result panel on right bottom half of page. Clicking on a taxonomic name will cause the query result to show only results in that taxonomy. The icons indicate the number of times a hit was recorded for databases under that classification.</li></ul>
+	1 = se-handle.png
+	1-5 = nw-handle.png
+	&gt;5 = more.png
+<ul><li dir="ltr">Query Details: it details the query. 
+</li><li dir="ltr">Query Result: This panel shows many different views of the query hits. It can be changed using the view <a style="color:#204A87" href="#button">button</a> on the <a style="color:#204A87" href="#top">top</a> left, relative to this panel. Query hit regions view color coding are explained below.</li></ul>
+	The following background color/highlight are used:
+<ul><li style="list-style-type: none" dir=""><ul><li dir="ltr">Light Blue: no sighnificant meaning. Chosen to view sequences colors easily.
+</li><li dir="ltr">Green: indicates a mismatch.</li></ul></li></ul>
+	The following font colors are used. 
+<ul><li style="list-style-type: none" dir=""><ul><li dir="ltr">Black: The sequences in black font are not hit.
+</li><li dir="ltr">Yellow - Red: Indicated the 21mer found a match in the database. Yellow indicating low frequency of hits and Red for more.</li></ul></li></ul>
+
+This web application was written by Temi Varghese, CSIRO. This program uses offtarget finder perl program written by Robert Good, Melbourne University. The transcriptome data was provided by the 1Kite Team(http://1kite.org/).</div>
+</body></html>

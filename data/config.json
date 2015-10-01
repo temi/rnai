@@ -1,0 +1,11 @@
+{
+"databaseDir":"../1KITE/e3",
+"tempDir":"../files",
+"queryFile":"../files/query.txt",
+"host" : "localhost",
+"driver" : "pgsql",
+"dbname" : "rnai",
+"port" : 5432,
+"username" : "ubuntu",
+"password" : ""
+}

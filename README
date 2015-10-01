@@ -1,0 +1,17 @@
+Requirements:
+* apache2
+* postgres 9.1
+* php5.3
+* bioinformatics software - ubuntu packages bowtie, ncbi-blast+, libjson-perl
+* transcriptome databases - 1KITE
+* php5-pgsql, libpg-perl, libapache-dbi-perl
+
+run the database creation script 
+psql -p 5435 -h morgan -f data/setup.sql
+
+
+query states
+* requesting
+* submitted
+* executing
+* completed
